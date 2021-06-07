@@ -9,7 +9,7 @@ const app = express()
 // config cors allowed domain
 const corsOpts = {
   origin: process.env.CLIENT_DOMAIN,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 }
 
 // db
@@ -17,6 +17,7 @@ connectDb(process.env.DATABASE_URI)
 
 // import routes
 const authRoutes = require('./routes/auth')
+const userRoutes = require('./routes/user')
 
 // app middlewares
 // morgan for logging in dev env
@@ -25,8 +26,9 @@ app.use(express.json())
 // avoid sharing data between different domain (dev)
 app.use(cors(corsOpts))
 
-// middlewares
+// routes
 app.use('/api/auth', authRoutes)
+app.use('/api/profile', userRoutes)
 
 const port = process.env.PORT || 5000
 
